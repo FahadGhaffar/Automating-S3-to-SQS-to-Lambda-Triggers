@@ -6,9 +6,12 @@ from datetime import datetime
 
 s3_client = boto3.client('s3')
 def lambda_handler(event, context):
-    # Extract the bucket name and file key from the event
-    bucket_name = event['Records'][0]['s3']['bucket']['name']
-    input_file_key = event['Records'][0]['s3']['object']['key']
+    # SQS message body is a stringified JSON of S3 event
+    s3_event = json.loads(event['Records'][0]['body'])
+
+    # Now extract bucket name and key from the actual S3 event inside the message
+    bucket_name = s3_event['Records'][0]['s3']['bucket']['name']
+    input_file_key = s3_event['Records'][0]['s3']['object']['key']
     
     # Ensure we are only processing files from the 'Input-data/' folder
     if input_file_key.startswith('Input-data/'):
