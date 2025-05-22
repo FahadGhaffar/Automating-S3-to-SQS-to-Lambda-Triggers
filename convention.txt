@@ -1,0 +1,11 @@
+lambda = fn-stock-prices-fg 
+role= role-stock-prices-fg 
+
+s3 = s3-stock-prices-fg
+        input directory input-data
+        output directoury output-data/      
+
+
+
+
+lambda funtion required role
